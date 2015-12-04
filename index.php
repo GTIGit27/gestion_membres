@@ -31,12 +31,9 @@ try {
                 echo "Qui es-tu étranger ?";    
             }   
         
+        }
+
     }
-
-} catch(PDOException $ex) {
-
-
-
 }
 
 ?>

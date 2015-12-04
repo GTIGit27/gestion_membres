@@ -12,7 +12,11 @@
 
     <body>
 
-        
+    <?php
+        if (isset($_SESSION["user"])) {
+            echo "Bonjour " . $_SESSION["user"]["prenom_nom"];
+        }
+    ?>
 
     </body>
 
