@@ -99,6 +99,14 @@ if(isset($_POST["go"]) ) {// "go" est le name du bouton
     </head>
 
     <body>
+    
+    <?php
+        if (isset($_SESSION["user"])) {
+            echo "Bonjour " . $_SESSION["user"]["prenom_nom"];
+        }
+    ?>
+       
+       
         <form method="post" enctype="multipart/form-data">
             <input type="text" name="nom" placeholder="nom" value="<?= (isset($nom)) ? $nom : '' ?>"><br/>
             <input type="text" name="prenom" placeholder="prenom" value="<?= (isset($prenom)) ? $prenom : '' ?>"><br/>
