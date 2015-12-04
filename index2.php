@@ -14,7 +14,13 @@
 
     <?php
         if (isset($_SESSION["user"])) {
+            
+            
+            
+            
             echo "Bonjour " . $_SESSION["user"]["prenom_nom"];
+        } else {
+            echo "Adresse email déjà utilisée";
         }
     ?>
 

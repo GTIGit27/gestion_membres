@@ -28,14 +28,20 @@ try {
                 $_SESSION["user"]["id"] = $result["id"];
                 $_SESSION["user"]["prenom_nom"] = $result["prenom"] . "  " . $result["nom"];
             } else {
-                echo "Qui es-tu étranger ?";    
-            }   
-        
+                echo "Qui es-tu étranger ?";   
+            }
         }
-
+        
+        if($result) {
+            
+        }
+        
+        
+        
     }
+        } catch(PDOException $ex) {
+            echo $ex->getMessage();
 }
-
 ?>
 
 
