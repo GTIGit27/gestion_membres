@@ -5,6 +5,7 @@ $password = trim($_POST["password"]);
 
 if( filter_var($email, FILTER_VALIDATE_EMAIL) && !empty($password) ) {
 	$password = password_hash($password, PASSWORD_DEFAULT);
+    // insert code
 }
 
 ?>

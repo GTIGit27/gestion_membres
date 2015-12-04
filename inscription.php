@@ -13,8 +13,8 @@ try {
 	$password = password_hash($password, PASSWORD_DEFAULT);
     
        
-        $stmt = $db->prepare("INSERT INTO membres (nom, prenom, adresse, cp, ville, email, password) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->execute(array($_POST["nom"], $_POST["prenom"], $_POST["adresse"], $_POST["cp"], $_POST["ville"], $_POST["email"], $password)); // on peut reprendre directement la variable $password
+        $stmt = $db->prepare("INSERT INTO membres (nom, prenom, adresse, cp, ville, email, password, ma_photo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->execute(array($_POST["nom"], $_POST["prenom"], $_POST["adresse"], $_POST["cp"], $_POST["ville"], $_POST["email"], $password, $_FILES["ma_photo"]["name"])); // on peut reprendre directement la variable $password
 
     }
     }// fin du if
@@ -24,9 +24,7 @@ try {
 
 if(isset($_POST["go"]) ) {// "go" est le name du bouton
     
- 
-
-
+    
     $nom = $_POST["nom"];
     $prenom = $_POST["prenom"];
     $adresse = $_POST["adresse"];
@@ -34,10 +32,8 @@ if(isset($_POST["go"]) ) {// "go" est le name du bouton
     $ville = $_POST["ville"];
     $email = ($_POST["email"]);
     $password = ($_POST["password"]);
-
+    
     $message_erreur = "";
-
-
 
     if( empty($_POST["nom"]) ) {
         //      echo "le champ nom est obligatoire !!!!<br/>";
@@ -74,6 +70,19 @@ if(isset($_POST["go"]) ) {// "go" est le name du bouton
         $message_erreur .- "le champ password est obligatoire !!!!<br/>";
     }
     
+    if( empty($_FILES["ma_foto"]) ) {
+        //      echo "Le champ pays est obligatoire !!!!<br/>";
+        $message_erreur .- "Veuillez insérer une photo !!!!<br/>";
+    }
+//    var_dump($_FILES);
+		$repertoire_upload = "./uploads/"; // en relatif : ./uploads/ ; en absolu : c://xampp//htdocs//FormulaireUploadFichier//uploads//
+		$fichier_upload = $repertoire_upload . basename($_FILES['ma_photo']['name']);
+//		echo $fichier_upload;
+		if (move_uploaded_file($_FILES['ma_photo']['tmp_name'], $fichier_upload) ) {
+			echo "Le téléversement est OK";
+		} else {
+			echo "Erreur...";
+		}
     
 }
 
@@ -90,7 +99,7 @@ if(isset($_POST["go"]) ) {// "go" est le name du bouton
     </head>
 
     <body>
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             <input type="text" name="nom" placeholder="nom" value="<?= (isset($nom)) ? $nom : '' ?>"><br/>
             <input type="text" name="prenom" placeholder="prenom" value="<?= (isset($prenom)) ? $prenom : '' ?>"><br/>
             <input type="text" name="adresse" placeholder="adresse" value="<?= (isset($adresse)) ? $adresse : '' ?>"><br/>
@@ -98,6 +107,7 @@ if(isset($_POST["go"]) ) {// "go" est le name du bouton
             <input type="text" name="ville" placeholder="ville" value="<?= (isset($ville)) ? $ville : '' ?>"><br/>
             <input type="email" name="email" placeholder="email" value="<?= (isset($email)) ? $email : '' ?>"><br/>
             <input type="password" name="password" placeholder="password" value="<?= (isset($password)) ? $password : '' ?>"><br/>
+            <input type="file" name="ma_photo" /><br/>
             <input type="submit" name="go" value="S'inscrire">
         </form>
 
